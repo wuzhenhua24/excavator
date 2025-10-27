@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { DirtPileData, TreasureType } from './types';
-import { ExcavatorIcon, DirtPileIcon, LeftArrowIcon, RightArrowIcon, DigIcon, TreasureMap, ResetIcon } from './components/Icons';
+import { ExcavatorIcon, DirtPileIcon, LeftArrowIcon, RightArrowIcon, DigIcon, TreasureMap, ResetIcon, UpArrowIcon, DownArrowIcon } from './components/Icons';
 
 const GRID_WIDTH = 8;
+const GRID_HEIGHT = 4;
 const NUM_TREASURES = 5;
 const ALL_TREASURES = Object.values(TreasureType);
 
@@ -29,60 +30,58 @@ const ScoreDisplay: React.FC<{ foundTreasures: TreasureType[] }> = ({ foundTreas
 
 const GameBoard: React.FC<{
     dirtPiles: DirtPileData[];
-    excavatorPos: number;
+    excavatorPos: { x: number; y: number };
     isDigging: boolean;
     diggingPileIndex: number | null;
     isMoving: boolean;
 }> = ({ dirtPiles, excavatorPos, isDigging, diggingPileIndex, isMoving }) => (
-    <div className="relative w-full aspect-[2/1] bg-amber-800 rounded-lg p-4 shadow-inner overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-sky-400 to-transparent"></div>
-        <div className="relative w-full h-full">
-            {/* Excavator */}
-            <div
-                className="absolute -top-12 md:-top-16 left-0 w-1/4 h-auto transition-transform duration-300 ease-in-out"
-                style={{ transform: `translateX(${excavatorPos * 50}%)` }}
-            >
-                <div className={isDigging ? 'animate-excavator-shake' : ''}>
-                    <ExcavatorIcon className="w-full h-full" isDigging={isDigging} isMoving={isMoving} />
-                </div>
-            </div>
-
-            {/* Dirt Piles */}
-            <div className="absolute bottom-0 grid grid-cols-8 w-full h-2/5">
-                {dirtPiles.map((pile) => (
-                    <div key={pile.id} className="relative w-full h-full flex justify-center items-end">
-                        {!pile.isDug ? (
-                            <div className={`w-full h-full ${pile.id === diggingPileIndex ? 'animate-dirt-pile-shake' : ''}`}>
-                                <DirtPileIcon className="w-full h-full" />
-                            </div>
-                        ) : pile.treasure ? (
-                            <div className="animate-treasure-reveal">
-                                <TreasureMap type={pile.treasure} className="w-12 h-12" />
-                            </div>
-                        ) : null}
-                    </div>
-                ))}
+    <div className="relative w-full aspect-[2/1] bg-amber-800 rounded-lg shadow-inner overflow-hidden border-4 border-amber-900">
+        {/* Excavator */}
+        <div
+            className="absolute top-0 left-0 w-[12.5%] h-[25%] transition-transform duration-300 ease-in-out z-10"
+            style={{ transform: `translate(${excavatorPos.x * 100}%, ${excavatorPos.y * 100}%)` }}
+        >
+            <div className={isDigging ? 'animate-excavator-shake' : ''}>
+                <ExcavatorIcon className="w-full h-full" isDigging={isDigging} isMoving={isMoving} />
             </div>
         </div>
-        <div className="absolute bottom-0 left-0 w-full h-1/5 bg-amber-900"></div>
+
+        {/* Dirt Piles Grid */}
+        <div className="grid grid-cols-8 grid-rows-4 w-full h-full">
+            {dirtPiles.map((pile) => (
+                <div key={pile.id} className="relative w-full h-full flex justify-center items-center border border-amber-900/20">
+                    {!pile.isDug ? (
+                        <div className={`w-full h-full ${pile.id === diggingPileIndex ? 'animate-dirt-pile-shake' : ''}`}>
+                            <DirtPileIcon className="w-full h-full p-1" />
+                        </div>
+                    ) : pile.treasure ? (
+                        <div className="animate-treasure-reveal">
+                            <TreasureMap type={pile.treasure} className="w-10 h-12" />
+                        </div>
+                    ) : null}
+                </div>
+            ))}
+        </div>
     </div>
 );
 
 const ControlPanel: React.FC<{
-    onMove: (direction: 'left' | 'right') => void;
+    onMove: (direction: 'left' | 'right' | 'up' | 'down') => void;
     onDig: () => void;
     onReset: () => void;
 }> = ({ onMove, onDig, onReset }) => (
     <div className="flex justify-center items-center gap-4 mt-4">
-        <button onClick={() => onMove('left')} className="p-4 bg-yellow-500 text-white rounded-full shadow-lg active:bg-yellow-600 transform active:scale-95 transition-all">
-            <LeftArrowIcon />
-        </button>
-        <button onClick={onDig} className="p-6 bg-red-600 text-white rounded-full shadow-lg active:bg-red-700 transform active:scale-95 transition-all">
-            <DigIcon />
-        </button>
-        <button onClick={() => onMove('right')} className="p-4 bg-yellow-500 text-white rounded-full shadow-lg active:bg-yellow-600 transform active:scale-95 transition-all">
-            <RightArrowIcon />
-        </button>
+        <div className="grid grid-cols-3 gap-2 w-auto items-center">
+            <div></div>
+            <button onClick={() => onMove('up')} className="p-4 bg-yellow-500 text-white rounded-full shadow-lg active:bg-yellow-600 transform active:scale-95 transition-all place-self-center"><UpArrowIcon /></button>
+            <div></div>
+            <button onClick={() => onMove('left')} className="p-4 bg-yellow-500 text-white rounded-full shadow-lg active:bg-yellow-600 transform active:scale-95 transition-all place-self-center"><LeftArrowIcon /></button>
+            <button onClick={onDig} className="p-6 bg-red-600 text-white rounded-full shadow-lg active:bg-red-700 transform active:scale-95 transition-all place-self-center"><DigIcon /></button>
+            <button onClick={() => onMove('right')} className="p-4 bg-yellow-500 text-white rounded-full shadow-lg active:bg-yellow-600 transform active:scale-95 transition-all place-self-center"><RightArrowIcon /></button>
+            <div></div>
+            <button onClick={() => onMove('down')} className="p-4 bg-yellow-500 text-white rounded-full shadow-lg active:bg-yellow-600 transform active:scale-95 transition-all place-self-center"><DownArrowIcon /></button>
+            <div></div>
+        </div>
         <button onClick={onReset} className="p-4 bg-blue-500 text-white rounded-full shadow-lg active:bg-blue-600 transform active:scale-95 transition-all ml-8">
             <ResetIcon className="w-12 h-12" />
         </button>
@@ -106,7 +105,7 @@ const GameOverModal: React.FC<{ onPlayAgain: () => void }> = ({ onPlayAgain }) =
 
 
 export default function App() {
-    const [excavatorPos, setExcavatorPos] = useState(0);
+    const [excavatorPos, setExcavatorPos] = useState({ x: 0, y: 0 });
     const [dirtPiles, setDirtPiles] = useState<DirtPileData[]>([]);
     const [foundTreasures, setFoundTreasures] = useState<TreasureType[]>([]);
     const [isGameOver, setIsGameOver] = useState(false);
@@ -116,14 +115,14 @@ export default function App() {
 
     const initializeGame = useCallback(() => {
         let newPiles: DirtPileData[] = [];
-        for (let i = 0; i < GRID_WIDTH; i++) {
+        for (let i = 0; i < GRID_WIDTH * GRID_HEIGHT; i++) {
             newPiles.push({ id: i, treasure: null, isDug: false });
         }
 
         let treasuresToPlace = NUM_TREASURES;
         let availableTreasures = [...ALL_TREASURES];
         while (treasuresToPlace > 0) {
-            const pileIndex = Math.floor(Math.random() * GRID_WIDTH);
+            const pileIndex = Math.floor(Math.random() * (GRID_WIDTH * GRID_HEIGHT));
             if (!newPiles[pileIndex].treasure) {
                 const treasureIndex = Math.floor(Math.random() * availableTreasures.length);
                 newPiles[pileIndex].treasure = availableTreasures.splice(treasureIndex, 1)[0];
@@ -132,7 +131,7 @@ export default function App() {
         }
 
         setDirtPiles(newPiles);
-        setExcavatorPos(0);
+        setExcavatorPos({ x: 0, y: 0 });
         setFoundTreasures([]);
         setIsGameOver(false);
         setMessage('');
@@ -144,16 +143,23 @@ export default function App() {
         initializeGame();
     }, [initializeGame]);
 
-    const handleMove = (direction: 'left' | 'right') => {
+    const handleMove = (direction: 'left' | 'right' | 'up' | 'down') => {
         if (isGameOver || currentAction !== 'idle') return;
         
         setCurrentAction('moving');
 
         setExcavatorPos(prev => {
-            if (direction === 'left') {
-                return Math.max(0, prev - 1);
-            } else {
-                return Math.min(GRID_WIDTH - 1, prev + 1);
+            switch(direction) {
+                case 'left':
+                    return { ...prev, x: Math.max(0, prev.x - 1) };
+                case 'right':
+                    return { ...prev, x: Math.min(GRID_WIDTH - 1, prev.x + 1) };
+                case 'up':
+                    return { ...prev, y: Math.max(0, prev.y - 1) };
+                case 'down':
+                    return { ...prev, y: Math.min(GRID_HEIGHT - 1, prev.y + 1) };
+                default:
+                    return prev;
             }
         });
         
@@ -165,7 +171,7 @@ export default function App() {
     const handleDig = () => {
         if (isGameOver || currentAction !== 'idle') return;
 
-        const digPosition = excavatorPos;
+        const digPosition = excavatorPos.y * GRID_WIDTH + excavatorPos.x;
         const targetPile = dirtPiles[digPosition];
         if (targetPile && targetPile.isDug) return;
         

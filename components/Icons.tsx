@@ -95,6 +95,19 @@ export const RightArrowIcon = () => (
   </svg>
 );
 
+export const UpArrowIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7m-14-6l7-7 7 7" />
+  </svg>
+);
+
+export const DownArrowIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 9l7 7 7-7m-14 6l7 7 7-7" />
+  </svg>
+);
+
+
 export const DigIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" viewBox="0 0 24 24" fill="currentColor">
         <path d="M2 20h8v-2H2v2zm10.71-3.12c-.52.26-1.14.3-1.71.08-.63-.25-1.15-.8-1.5-1.45l-2.58-4.79c-.31-.58-.21-1.3.23-1.75l.18-.18c.5-.5 1.31-.5 1.81 0l3.07 3.07-1.5 2.8zM4 2h4v2H4V2zm4 4H4v2h4V6zm14.25-1.18c.22-.22.22-.58 0-.79l-1.41-1.41c-.22-.22-.58-.22-.79 0l-1.06 1.06-2.5-2.5c-.22-.22-.58-.22-.79 0l-1.41 1.41c-.22-.22-.22-.58 0 .79l2.5 2.5-3.89 3.89c-.63.63-.18 1.71.71 1.71h1.41l4.95-4.95 1.06-1.06z"/>
