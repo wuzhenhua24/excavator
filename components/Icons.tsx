@@ -83,33 +83,33 @@ export const CrownIcon: React.FC<{ className?: string }> = ({ className }) => (
     </svg>
 );
 
-export const LeftArrowIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+export const LeftArrowIcon: React.FC<{ className?: string }> = ({ className = "h-12 w-12" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
   </svg>
 );
 
-export const RightArrowIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+export const RightArrowIcon: React.FC<{ className?: string }> = ({ className = "h-12 w-12" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
   </svg>
 );
 
-export const UpArrowIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+export const UpArrowIcon: React.FC<{ className?: string }> = ({ className = "h-12 w-12" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7m-14-6l7-7 7 7" />
   </svg>
 );
 
-export const DownArrowIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+export const DownArrowIcon: React.FC<{ className?: string }> = ({ className = "h-12 w-12" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 9l7 7 7-7m-14 6l7 7 7-7" />
   </svg>
 );
 
 
-export const DigIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" viewBox="0 0 24 24" fill="currentColor">
+export const DigIcon: React.FC<{ className?: string }> = ({ className = "h-12 w-12" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="currentColor">
         <path d="M2 20h8v-2H2v2zm10.71-3.12c-.52.26-1.14.3-1.71.08-.63-.25-1.15-.8-1.5-1.45l-2.58-4.79c-.31-.58-.21-1.3.23-1.75l.18-.18c.5-.5 1.31-.5 1.81 0l3.07 3.07-1.5 2.8zM4 2h4v2H4V2zm4 4H4v2h4V6zm14.25-1.18c.22-.22.22-.58 0-.79l-1.41-1.41c-.22-.22-.58-.22-.79 0l-1.06 1.06-2.5-2.5c-.22-.22-.58-.22-.79 0l-1.41 1.41c-.22-.22-.22-.58 0 .79l2.5 2.5-3.89 3.89c-.63.63-.18 1.71.71 1.71h1.41l4.95-4.95 1.06-1.06z"/>
     </svg>
 );
@@ -158,3 +158,25 @@ export const TreasureMap: React.FC<{ type: TreasureType, className?: string }> =
     </div>
   );
 };
+
+export const SunIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg className={className} viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="50" fill="currentColor"/>
+    </svg>
+);
+
+// FIX: Add `style` prop to allow passing CSS custom properties for animations.
+export const CloudIcon: React.FC<{ className?: string; style?: React.CSSProperties }> = ({ className, style }) => (
+    <svg className={className} style={style} viewBox="0 0 120 80" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 40 a 20 20 0 0 1 40 0 H 5 M30 20 a 20 20 0 0 1 40 0 H 30 M55 30 a 25 25 0 0 1 50 0 H 55 M0 80 H 120 V 40 a 20 20 0 0 1 -40 0 a 20 20 0 0 1 -40 0 a 25 25 0 0 1 -50 0 V 80 Z" />
+    </svg>
+);
+
+export const ConstructionConeIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg className={className} viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="50,10 20,90 80,90" fill="#FF6F00"/>
+        <rect x="10" y="90" width="80" height="10" fill="#424242"/>
+        <rect x="30" y="30" width="40" height="10" fill="white"/>
+        <rect x="25" y="60" width="50" height="10" fill="white"/>
+    </svg>
+);
